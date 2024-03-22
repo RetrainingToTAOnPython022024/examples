@@ -26,9 +26,28 @@ class RegPopUp:
         self.page.get_by_role("link", name="Зареєструватись").click()
 
 
+class Header:
+    def __init__(self, page):
+        self.page = page
+
+    def get_current_language(self):
+        self.page.locator("app-ubs").get_by_label("english").click()
+        self.page.get_by_label("UA", exact=True).click()
+
+    def set_language(self, language):
+        self.page.locator("app-ubs").get_by_label("english").click()
+        self.page.get_by_label(language, exact=True).click()
+        return Home(self.page)
+
+
 class Home:
     def __init__(self, page):
         self.page = page
+        self.__header = Header(page)
+
+    @property
+    def header(self):
+        return self.__header
 
     def click_reg(self):
         self.page.locator("app-ubs").get_by_role("link", name="Зареєструватись").click()
